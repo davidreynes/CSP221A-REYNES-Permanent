@@ -63,7 +63,7 @@ def log_action(func):
 
 
 class CleaningRobot(Robot):
-    def__init__(self, name, battery=100, dust_capacity=500):
+    def __init__(self, name, battery=100, dust_capacity=500):
         super().__init__(name, battery)
         self.dust_capacity = dust_capacity
 
@@ -82,4 +82,7 @@ class DroneRobot(Robot):
         self.use_battery(25)
         return f"{self.name} flew to an altitude of {self.max_altitude} meters"
 
+def fleet_report(robots):
+    for robot in robots:
+        print(str(robot))
 
