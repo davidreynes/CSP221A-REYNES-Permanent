@@ -95,7 +95,15 @@ def run_task_safely(robot, **kwargs):
         print(f"Task result: {result}")
     finally:
         print(f"{robot.name} battery level: {robot.battery}%")
+#-----------------------------
+class CarRobot(Robot):
+    def __init__(self, name, battery=100, top_speed=60):
+        super().__init__(name, battery)
+        self.top_speed = top_speed
 
+    def perform_task(self, **kwargs):
+        self.use_battery(15)
+        return f"{self.name} drove a delivery route at up to {self.top_speed} km/h"
 #-------------------------------------
 
 class BuggyBag:
@@ -129,12 +137,14 @@ if __name__ == "__main__":
     fleet = [
         CleaningRobot.from_config({"name": "Roomba", "battery": 100}),
         DroneRobot.from_config({"name": "Aqua-Drone", "battery": 15}),
+        CarRobot.from_config({"name": "Speedy", "battery": 100}),
     ]
 
     fleet_report(fleet)
     run_task_safely(fleet[0])
     run_task_safely(fleet[1])
     run_task_safely(fleet[1])
+    run_task_safely(fleet[2])
 
     print(repr(fleet[0]))
     print(CleaningRobot.perform_task.__name__)  # must print "perform_task"
