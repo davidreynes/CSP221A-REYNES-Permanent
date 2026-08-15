@@ -46,3 +46,40 @@ class Robot(abc.ABC):
     @abc.abstractmethod
     def perform_task(self, **kwargs):
         ...
+
+import functools
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+def log_action(func):
+    @functools.wraps(func)
+    def wrapper(self, *args, **kwargs):
+        logging.info(f"{self.name}: starting {func.__name__}")
+        result = func(self, *args, **kwargs)
+        logging.info(f"{self.name}: finished {func.__name__}")
+        return result
+    return wrapper
+
+
+class CleaningRobot(Robot):
+    def__init__(self, name, battery=100, dust_capacity=500):
+        super().__init__(name, battery)
+        self.dust_capacity = dust_capacity
+
+    @log_action
+    def perform_task(self, **kwargs):
+        self.use_battery(10)  # Assume cleaning uses 10% battery
+        return f"{self.name} vacuumed the floor"
+
+
+class DroneRobot(Robot):
+    def __init__(self, name, battery=100, max_altitude=120):
+        super().__init__(name, battery)
+        self.max_altitude = max_altitude
+
+    def perform_task(self, **kwargs):
+        self.use_battery(25)
+        return f"{self.name} flew to an altitude of {self.max_altitude} meters"
+
+
