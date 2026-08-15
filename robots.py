@@ -116,4 +116,42 @@ def demonstrate_mutable_class_attribute_bug():
     b = BuggyBag()
     a.add("apple")
     b.add("banana")
-    
+    print("Buggy version (shared list):", a.items, b.items)
+
+    x = FixedBag()
+    y = FixedBag()
+    x.add("apple")
+    y.add("banana")
+    print("Fixed version (separate lists):", x.items, y.items)
+
+
+
+if __name__ == "__main__":
+    fleet  = [
+        CleaningRobot.from_config({"name": "Roomba", "battery": 100}),
+        DroneRobot.from_config({"name": "Aqua-Drone", "battery": 15}),
+    ]
+
+    fleet_report(fleet)
+    run_task_safely(fleet[0])
+    run_task_safely(fleet[1])
+    run_task_safely(fleet[1])
+
+    demonstrate_mutable_class_attribute_bug()
+
+if __name__ == "__main__":
+    fleet = [
+        CleaningRobot.from_config({"name": "Roomba", "battery": 100}),
+        DroneRobot.from_config({"name": "Aqua-Drone", "battery": 15}),
+    ]
+
+    fleet_report(fleet)
+    run_task_safely(fleet[0])
+    run_task_safely(fleet[1])
+    run_task_safely(fleet[1])
+
+    print(repr(fleet[0]))
+    print(CleaningRobot.perform_task.__name__)  # must print "perform_task"
+    print("Population:", Robot.population)
+
+    demonstrate_mutable_class_attribute_bug()
