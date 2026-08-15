@@ -86,3 +86,34 @@ def fleet_report(robots):
     for robot in robots:
         print(str(robot))
 
+def run_task_safely(robot, **kwargs):
+    try:
+        result = robot.perform_task(**kwargs)
+    except InsufficientBatteryError as e:
+        logging.error(str(e))
+    else:
+        print(f"Task result: {result}")
+    finally:
+        print(f"{robot.name} battery level: {robot.battery}%")
+
+#-------------------------------------
+
+class BuggyBag:
+    items = [] # BUG:
+
+    def add(self, item):
+        self.items.append(item) 
+
+class FixedBag:
+    def __init__(self):
+        self.items = []
+
+    def add(self, item):
+        self.items.append(item)
+
+def demonstrate_mutable_class_attribute_bug():
+    a = BuggyBag()
+    b = BuggyBag()
+    a.add("apple")
+    b.add("banana")
+    
