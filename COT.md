@@ -1,0 +1,1 @@
+So basically I created this code with a structured typical top to bottom clean, and well organized typical python project management. I followed each and every instructions like how the exam told me to. I breakdown the problems in few different pieces, solving each and everything in a systematic order.
